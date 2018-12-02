@@ -1,5 +1,6 @@
 package park;
 
+import exceptions.NegativePriceException;
 import transport.Transport;
 
 import java.util.ArrayList;
@@ -46,7 +47,10 @@ public class Park {
         }
     }
 
-    public void getTransportByParameters(int fuelConsumptionMin, int fuelConsumptionMax, int priceMin, int priceMax){
+    public void getTransportByParameters (int fuelConsumptionMin, int fuelConsumptionMax, int priceMin, int priceMax)throws NegativePriceException {
+        if (priceMin <= 0 || priceMax <= 0){
+            throw new NegativePriceException("Price value cannot be negative or equal to 0");
+        }
         for (int i = 0; i < transport.size(); i++) {
             if (transport.get(i).getFuelConsumption() >= fuelConsumptionMin && transport.get(i).getFuelConsumption() <= fuelConsumptionMax &&
                     transport.get(i).getPrice() >= priceMin && transport.get(i).getPrice() <= priceMax){
