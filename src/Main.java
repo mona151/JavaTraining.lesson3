@@ -24,13 +24,13 @@ public class Main {
         Bus busMan = new Bus(178.7f, "MAGNIT", 1800000, Manufacturers.MAN.toString());
         Bus busIsuzu = new Bus(80f, "Novoultra 4HK1E", 4800000, Manufacturers.ISUZU.toString());
         System.out.println("Enter fuel consmption value for Huyndai Solaris Cab:");
-        float solarisFC = in.nextInt();
         try{
+            float solarisFC = in.nextInt();
             Auto cabSolaris = new Auto(solarisFC, "Solaris", 630000, Manufacturers.HUYNDAI.toString());
             transport.add(cabSolaris);
-        } catch (ZeroFCException e) {
+        } catch (ZeroFCException | InputMismatchException e) {
             System.out.println("You have entered invalid fuel consumption for Solaris");
-            e.printStackTrace();
+            return;
         }
 
         int fuelConsumptionMin = 0, fuelConsumptionMax = 0, priceMin = 0, priceMax =0;
@@ -46,13 +46,13 @@ public class Main {
         System.out.println("Park total price is " + park.getParkTotalPrice());
         park.sortParkByFuelConsumption();
         System.out.println("Enter desired min and max fuel consumption + min and max price:");
-        try {
-            fuelConsumptionMin = in.nextInt();
-            fuelConsumptionMax = in.nextInt();
+            try {
+                fuelConsumptionMin = in.nextInt();
+                fuelConsumptionMax = in.nextInt();
 
-        } catch (InputMismatchException e) {
-            e.printStackTrace();
-            System.out.println("Fuel consumption values should be numeric");
+            } catch (InputMismatchException e) {
+                System.out.println("Fuel consumption values should be numeric");
+                return;
         }
 
         try {
@@ -60,19 +60,16 @@ public class Main {
             priceMin = Integer.parseInt(in.next());
             System.out.println("Enter maximum price: ");
             priceMax = in.nextInt();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | InputMismatchException e) {
             System.out.println("You have entered invalid minimum price");
-        } catch (InputMismatchException e) {
-            e.printStackTrace();
-            System.out.println("You have entered invalid maximum price");
+            return;
         }
 
         try{
             park.getTransportByParameters(fuelConsumptionMin, fuelConsumptionMax, priceMin, priceMax);
         } catch (NegativePriceException e) {
             e.printStackTrace();
+            return;
         }
     }
-
 }

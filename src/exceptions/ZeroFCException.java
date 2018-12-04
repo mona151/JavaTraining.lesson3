@@ -1,8 +1,6 @@
 package exceptions;
 
 public class ZeroFCException extends Exception {
-    public ZeroFCException() {
-    }
 
     public ZeroFCException(String message) {
         super(message);
